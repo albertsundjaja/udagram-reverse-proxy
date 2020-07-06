@@ -1,0 +1,17 @@
+services:
+  - docker
+
+install:
+  - echo "nothing needs to be installed"
+before_script:
+  - echo "no tests"
+
+script:
+    ## comment
+  - docker --version 
+  - docker build -t udagram-nginx .
+  - docker tag udagram-nginx grandia3/udagram-nginx:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push grandia3/udagram-nginx
